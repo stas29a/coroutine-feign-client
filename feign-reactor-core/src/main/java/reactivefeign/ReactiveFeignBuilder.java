@@ -132,7 +132,7 @@ public interface ReactiveFeignBuilder<T> {
     Contract contract();
 
     default InvocationHandlerFactory invocationHandlerFactory(){
-        return new ReactiveInvocationHandler.Factory();
+        return new ReactiveCoroutineInvocationHandler.Factory();
     }
 
     MethodHandlerFactory buildReactiveMethodHandlerFactory(PublisherClientFactory reactiveClientFactory);

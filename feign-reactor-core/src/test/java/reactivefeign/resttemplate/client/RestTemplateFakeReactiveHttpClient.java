@@ -24,6 +24,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+import reactivefeign.KotlinUtils;
 import reactivefeign.client.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -51,7 +52,12 @@ public class RestTemplateFakeReactiveHttpClient implements ReactiveHttpClient {
     this.restTemplate = restTemplate;
     this.acceptGzip = acceptGzip;
 
-    returnPublisherType = returnPublisherType(methodMetadata);
+    if (KotlinUtils.Companion.isSuspendMethod(methodMetadata.method())) {
+      returnPublisherType = Mono.class;
+    } else {
+      returnPublisherType = returnPublisherType(methodMetadata);
+    }
+
     returnActualType = forType(returnActualType(methodMetadata));
   }
 

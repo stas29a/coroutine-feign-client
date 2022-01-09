@@ -16,6 +16,7 @@ package reactivefeign.methodhandler;
 import feign.*;
 import feign.querymap.FieldQueryMapEncoder;
 import feign.template.UriUtils;
+import kotlin.coroutines.Continuation;
 import org.reactivestreams.Publisher;
 import reactivefeign.client.ReactiveHttpClient;
 import reactivefeign.client.ReactiveHttpRequest;
@@ -99,6 +100,9 @@ public class PublisherClientMethodHandler implements MethodHandler {
     }
 
     protected ReactiveHttpRequest buildRequest(Object[] argv) {
+        if (argv.length > 0 && argv[argv.length-1] instanceof Continuation) {
+            argv = Arrays.copyOfRange(argv, 0, argv.length-1);
+        }
 
         Object[] argsExpanded = expandArguments(argv);
 

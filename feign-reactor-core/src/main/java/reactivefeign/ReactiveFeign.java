@@ -140,7 +140,7 @@ public class ReactiveFeign {
     protected ReactiveStatusHandler statusHandler = ReactiveStatusHandlers.defaultFeignErrorDecoder();
     protected List<ReactiveLoggerListener<Object>> loggerListeners = new ArrayList<>();
     protected InvocationHandlerFactory invocationHandlerFactory =
-            new ReactiveInvocationHandler.Factory();
+            new ReactiveCoroutineInvocationHandler.Factory();
     protected boolean decode404 = false;
 
     private ReactiveRetryPolicy retryPolicy;
@@ -287,7 +287,8 @@ public class ReactiveFeign {
             MethodMetadata methodMetadata,
             Function<Flux<Retry.RetrySignal>, Flux<Throwable>> retryFunction) {
       Type returnPublisherType = returnPublisherType(methodMetadata);
-      if(returnPublisherType == Mono.class){
+      if(returnPublisherType == Mono.class ||
+              KotlinUtils.Companion.isSuspendMethod(methodMetadata.method())){
         return new MonoRetryPublisherHttpClient(publisherClient, methodMetadata, retryFunction);
       } else if(returnPublisherType == Flux.class) {
         return new FluxRetryPublisherHttpClient(publisherClient, methodMetadata, retryFunction);
@@ -297,7 +298,8 @@ public class ReactiveFeign {
     }
 
     protected PublisherHttpClient toPublisher(ReactiveHttpClient reactiveHttpClient, MethodMetadata methodMetadata){
-      if(isResponsePublisher(methodMetadata.returnType())){
+      if(KotlinUtils.Companion.isSuspendMethod(methodMetadata.method()) ||
+              isResponsePublisher(methodMetadata.returnType())){
         return new ResponsePublisherHttpClient(reactiveHttpClient);
       }
 

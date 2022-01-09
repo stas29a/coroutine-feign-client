@@ -29,7 +29,7 @@ import static java.util.Arrays.asList;
 import static reactivefeign.utils.FeignUtils.*;
 
 /**
- * Contract allowing only {@link Mono} and {@link Flux} return type.
+ * Contract allowing only {@link Mono} and {@link Flux} return type or method should be suspended
  *
  * @author Sergii Karpenko
  */
@@ -48,7 +48,26 @@ public class ReactiveContract implements Contract {
 
     for (final MethodMetadata metadata : methodsMetadata) {
       final Type type = metadata.returnType();
-      if (!isReactorType(type)) {
+      boolean isSuspend = KotlinUtils.Companion.isSuspendMethod(metadata.method());
+
+      if(isSuspend) {
+        Type kotlinType = KotlinUtils.Companion.getKotlinMethodReturnType(metadata.method());
+
+        if (kotlinType == null) {
+          throw new IllegalArgumentException(String.format("Method %s can't have continuation argument, only kotlin method is allowed",
+                  metadata.configKey()));
+        }
+
+        metadata.returnType(kotlinType);
+        int continuationIndex = metadata.method().getParameterCount() - 1;
+        metadata.ignoreParamater(continuationIndex);
+
+        if(metadata.bodyIndex() != null && metadata.bodyIndex().equals(continuationIndex)) {
+          metadata.bodyIndex(null);
+        }
+      }
+
+      if (!isReactorType(type) && !isSuspend) {
         throw new IllegalArgumentException(String.format(
             "Method %s of contract %s doesn't returns reactor.core.publisher.Mono or reactor.core.publisher.Flux",
             metadata.configKey(), targetType.getSimpleName()));

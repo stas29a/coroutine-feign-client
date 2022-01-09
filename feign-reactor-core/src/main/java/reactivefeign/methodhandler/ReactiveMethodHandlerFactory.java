@@ -2,6 +2,7 @@ package reactivefeign.methodhandler;
 
 import feign.MethodMetadata;
 import feign.Target;
+import reactivefeign.KotlinUtils;
 import reactivefeign.publisher.PublisherClientFactory;
 import reactivefeign.publisher.ResponsePublisherHttpClient;
 import reactor.core.publisher.Flux;
@@ -35,7 +36,8 @@ public class ReactiveMethodHandlerFactory implements MethodHandlerFactory {
 		MethodHandler methodHandler = new PublisherClientMethodHandler(
 				target, metadata, publisherClientFactory.create(metadata));
 
-		if(isResponsePublisher(metadata.returnType())){
+		if(KotlinUtils.Companion.isSuspendMethod(metadata.method()) ||
+				isResponsePublisher(metadata.returnType())){
 			return new MonoMethodHandler(methodHandler);
 		}
 
@@ -53,7 +55,8 @@ public class ReactiveMethodHandlerFactory implements MethodHandlerFactory {
 	public MethodHandler createDefault(Method method) {
 		MethodHandler defaultMethodHandler = new DefaultMethodHandler(method);
 
-		if(method.getReturnType() == Mono.class){
+		if(method.getReturnType() == Mono.class ||
+				KotlinUtils.Companion.isSuspendMethod(method)){
 			return new MonoMethodHandler(defaultMethodHandler);
 		} else if(method.getReturnType() == Flux.class) {
 			return new FluxMethodHandler(defaultMethodHandler);

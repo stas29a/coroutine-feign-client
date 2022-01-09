@@ -81,4 +81,17 @@ public class IceCreamOrder {
     return "IceCreamOrder{" + " id=" + id + ", balls=" + balls + ", mixins=" + mixins
         + ", orderTimestamp=" + orderTimestamp + '}';
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    IceCreamOrder that = (IceCreamOrder) o;
+    return id == that.id && Objects.equals(balls, that.balls) && Objects.equals(mixins, that.mixins) && Objects.equals(orderTimestamp, that.orderTimestamp);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, balls, mixins, orderTimestamp);
+  }
 }

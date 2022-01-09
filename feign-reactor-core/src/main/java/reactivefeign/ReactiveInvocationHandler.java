@@ -30,11 +30,11 @@ import static feign.Util.checkNotNull;
  *
  * @author Sergii Karpenko
  */
-public final class ReactiveInvocationHandler implements InvocationHandler {
+public class ReactiveInvocationHandler implements InvocationHandler {
   private final Target<?> target;
   private final Map<Method, MethodHandler> dispatch;
 
-  private ReactiveInvocationHandler(final Target<?> target,
+  public ReactiveInvocationHandler(final Target<?> target,
       final Map<Method, MethodHandler> dispatch) {
     this.target = checkNotNull(target, "target must not be null");
     this.dispatch = checkNotNull(dispatch, "dispatch must not be null");

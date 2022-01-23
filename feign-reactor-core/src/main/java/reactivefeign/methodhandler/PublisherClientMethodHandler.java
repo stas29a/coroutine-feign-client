@@ -100,7 +100,7 @@ public class PublisherClientMethodHandler implements MethodHandler {
     }
 
     protected ReactiveHttpRequest buildRequest(Object[] argv) {
-        if (argv.length > 0 && argv[argv.length-1] instanceof Continuation) {
+        if (argv != null && (argv.length > 0 && argv[argv.length-1] instanceof Continuation)) {
             argv = Arrays.copyOfRange(argv, 0, argv.length-1);
         }
 

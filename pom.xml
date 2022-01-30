@@ -1,11 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0             http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.playtika.reactivefeign</groupId>
+    <groupId>io.github.stas29a</groupId>
     <artifactId>feign-reactor</artifactId>
-    <version>3.1.2-SNAPSHOT</version>
+    <version>3.1.2</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -26,8 +25,8 @@
     </modules>
 
     <name>feign-reactive</name>
-    <description>Use Feign client on WebClient</description>
-    <url>https://github.com/Playtika/feign-reactive</url>
+    <description>Use Feign client on WebClient with Kotlin coroutine support</description>
+    <url>https://github.com/stas29a/coroutine-feign-client</url>
 
     <licenses>
         <license>
@@ -39,9 +38,9 @@
 
     <scm>
         <url>https://svn.apache.org/viewvc/maven</url>
-        <connection>scm:git:git://github.com/Playtika/feign-reactive.git</connection>
-        <developerConnection>scm:git:git@github.com:Playtika/feign-reactive.git</developerConnection>
-        <tag>HEAD</tag>
+        <connection>scm:git:git://github.com/stas29a/coroutine-feign-client.git</connection>
+        <developerConnection>scm:git:git@github.com:stas29a/coroutine-feign-client.git</developerConnection>
+        <tag>feign-reactor-3.1.2</tag>
     </scm>
 
     <properties>
@@ -51,10 +50,12 @@
         <versions-maven-plugin.version>2.3</versions-maven-plugin.version>
 
         <!-- GPG -->
-        <gpg.keyname>3EEF24C7</gpg.keyname>
+        <gpg.keyname>72D5815C1F78045EDE397D148E81CDFCEDAC54F2</gpg.keyname>
         <gpg.defaultKeyring>false</gpg.defaultKeyring>
         <gpg.useagent>true</gpg.useagent>
         <gpg.lockMode>never</gpg.lockMode>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
     <developers>
@@ -62,6 +63,10 @@
             <id>kptfh</id>
             <name>Sergii Karpenko</name>
             <email>sergey.karpenko@gmail.com</email>
+        </developer>
+        <developer>
+            <name>Stas</name>
+            <email>stas29a@gmail.com</email>
         </developer>
     </developers>
 
@@ -99,12 +104,13 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>${nexus-staging-maven-plugin.version}</version>
+                        <version>1.6.7</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                            <stagingProfileId>io.github.stas29a</stagingProfileId>
                         </configuration>
                     </plugin>
                     <plugin>

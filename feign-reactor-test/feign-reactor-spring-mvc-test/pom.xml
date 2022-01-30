@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.playtika.reactivefeign</groupId>
+        <groupId>io.github.stas29a</groupId>
         <artifactId>feign-reactor-test</artifactId>
-        <version>3.1.2-SNAPSHOT</version>
+        <version>3.1.2</version>
     </parent>
 
     <artifactId>feign-reactor-spring-mvc-test</artifactId>
@@ -42,13 +42,13 @@
         </dependency>
 
         <dependency>
-            <groupId>com.playtika.reactivefeign</groupId>
+            <groupId>io.github.stas29a</groupId>
             <artifactId>feign-reactor-jetty</artifactId>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>com.playtika.reactivefeign</groupId>
+            <groupId>io.github.stas29a</groupId>
             <artifactId>feign-reactor-core</artifactId>
             <scope>test</scope>
         </dependency>
@@ -78,7 +78,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.playtika.reactivefeign</groupId>
+            <groupId>io.github.stas29a</groupId>
             <artifactId>feign-reactor-core</artifactId>
             <type>test-jar</type>
             <scope>test</scope>

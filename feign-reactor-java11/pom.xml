@@ -3,10 +3,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.playtika.reactivefeign</groupId>
+        <groupId>io.github.stas29a</groupId>
         <artifactId>feign-reactor-parent</artifactId>
         <relativePath>../feign-reactor-parent</relativePath>
-        <version>3.1.2-SNAPSHOT</version>
+        <version>3.1.2</version>
     </parent>
 
     <artifactId>feign-reactor-java11</artifactId>
@@ -17,13 +17,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.playtika.reactivefeign</groupId>
+            <groupId>io.github.stas29a</groupId>
             <artifactId>feign-reactor-core</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.playtika.reactivejson</groupId>
             <artifactId>json-reactor</artifactId>
+            <version>${json-reactor.version}</version>
         </dependency>
 
         <dependency>
@@ -39,13 +40,13 @@
 
         <!-- Tests -->
         <dependency>
-            <groupId>com.playtika.reactivefeign</groupId>
+            <groupId>io.github.stas29a</groupId>
             <artifactId>feign-reactor-core</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.playtika.reactivefeign</groupId>
+            <groupId>io.github.stas29a</groupId>
             <artifactId>feign-reactor-server-configurations</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
